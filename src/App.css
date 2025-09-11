@@ -103,6 +103,39 @@ body {
   gap: 8px;
 }
 
+/* Botón PDF */
+.pdf-button {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pdf-button:hover {
+  background: var(--primary-green);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.pdf-button:active {
+  transform: translateY(0);
+}
+
+.pdf-button .icon {
+  width: 16px;
+  height: 16px;
+}
+
 .status-indicator {
   background: var(--success-green);
   color: white;

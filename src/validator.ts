@@ -137,6 +137,7 @@ function validateQuestion(sentence: string): ValidationResult {
   // Caso especial: pregunta incompleta que comienza con verbo TO BE
   if (/^(am|are|is|was|were)\s+/i.test(sentence) && words.length >= 2) {
     const complement = words.slice(1).join(' ');
+      // @ts-ignore
     let suggestions = [];
 
     if (verb === 'are') {
@@ -185,10 +186,12 @@ function validateQuestion(sentence: string): ValidationResult {
     }
 
     const tense = ['am', 'are', 'is'].includes(verb) ? 'present' : 'past';
+      // @ts-ignore
     const correction = suggestions.length > 0 ? suggestions[0] : generateCorrection(sentence);
 
     return {
       isValid: false,
+        // @ts-ignore
       message: `✗ Incomplete sentence. Missing subject. Try: ${suggestions.slice(0, 3).join(', ')}.`,
       type: "question",
       tense: tense,

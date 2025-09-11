@@ -163,7 +163,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 👥 Autores
 
-- Tu nombre - Desarrollador principal
+- Daniel David Henriquez Julio - Desarrollador principal
 
 ---
 
