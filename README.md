@@ -163,7 +163,13 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 👥 Autores
 
-- Daniel David Henriquez Julio - Desarrollador principal
+Desarrolladores
+-Daniel David Henriquez Julio
+-Juan David Bolañoz Lopez
+-Víctor Daniel Marrugo Aguilar
+-Jesús David Caraballo Nieto
+-Wilmer Andrés Iriarte Camargo
+-Gabriel Jose Buelvas Morales
 
 ---
 
