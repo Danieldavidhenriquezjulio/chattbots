@@ -4,10 +4,7 @@
 ---
 
 # INFORME DEL PROYECTO
-## Chatbot con Expresiones Regulares para Validación del Verbo TO BE
-
-**Estudiante:** [Tu Nombre]  
-**Programa:** [Tu Programa]  
+## Chatbot con Expresiones Regulares para Validación del Verbo TO BE 
 **Fecha:** 11 de Septiembre de 2025
 
 ---
