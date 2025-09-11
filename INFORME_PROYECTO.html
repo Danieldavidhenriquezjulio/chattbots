@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe del Proyecto - Chatbot Educativo Botsito</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Estilos de impresión */
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; max-width: none; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+        }
+
+        /* Portada */
+        .cover {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .cover h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .cover h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .cover .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .cover .details {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        /* Contenido general */
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #34495e;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #f39c12;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .regex-example {
+            background: #e8f5e8;
+            border: 1px solid #27ae60;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .module-box {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 5px;
+            min-width: 150px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #7f8c8d;
+            margin: 0 1rem;
+        }
+
+        .screenshot {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            background: #f8f9fa;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+
+        .conclusion-box {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-download {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn-download:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-download no-print" onclick="window.print()">📄 Generar PDF</button>
+
+    <div class="container">
+        <!-- PORTADA -->
+        <div class="cover">
+            <h1>INFORME DEL PROYECTO</h1>
+            <h2>Chatbot Educativo - Botsito</h2>
+            <div class="subtitle">
+                Sistema Inteligente de Validación Gramatical<br>
+                Implementación con Expresiones Regulares y TypeScript
+            </div>
+            <div class="details">
+                <div>
+                    <strong>Tecnologías:</strong><br>
+                    React • TypeScript • Vite • Expresiones Regulares
+                </div>
+                <div>
+                    <strong>Fecha:</strong><br>
+                    Septiembre 2025
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="content">
+            <!-- INTRODUCCIÓN -->
+            <div class="section">
+                <h1>1. Introducción</h1>
+                <p>
+                    El presente informe documenta el desarrollo de <span class="highlight">Botsito</span>, un chatbot educativo especializado en la enseñanza y validación gramatical del verbo TO BE en inglés. Este proyecto representa una aplicación práctica e innovadora de las <strong>expresiones regulares</strong> como herramienta fundamental para el procesamiento de lenguaje natural en un contexto educativo.
+                </p>
+                <p>
+                    Las expresiones regulares constituyen una tecnología crítica en el desarrollo de software moderno, especialmente en aplicaciones que requieren análisis, validación y procesamiento de texto. En el contexto educativo, estas herramientas permiten crear sistemas inteligentes capaces de proporcionar retroalimentación instantánea y precisa a los estudiantes, facilitando un aprendizaje autónomo y efectivo.
+                </p>
+                <p>
+                    Botsito no es simplemente un validador de texto; es un asistente pedagógico inteligente que utiliza patrones regulares complejos para analizar la estructura gramatical de oraciones en inglés, identificar errores específicos y proporcionar correcciones contextualizadas. Esta aproximación demuestra cómo las tecnologías de programación pueden transformarse en herramientas educativas poderosas y accesibles.
+                </p>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- MARCO TEÓRICO -->
+            <div class="section">
+                <h1>2. Marco Teórico</h1>
+
+                <h2>2.1 Expresiones Regulares</h2>
+                <p>
+                    Las expresiones regulares (regex) son secuencias de caracteres que definen patrones de búsqueda y validación en cadenas de texto. Constituyen un lenguaje formal para describir conjuntos de cadenas mediante la combinación de caracteres literales y metacaracteres especiales.
+                </p>
+
+                <h3>Operadores Básicos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operador</th>
+                            <th>Descripción</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>^</code></td>
+                            <td>Inicio de línea</td>
+                            <td><code>^Hello</code> - coincide con "Hello" al inicio</td>
+                        </tr>
+                        <tr>
+                            <td><code>$</code></td>
+                            <td>Final de línea</td>
+                            <td><code>world$</code> - coincide con "world" al final</td>
+                        </tr>
+                        <tr>
+                            <td><code>+</code></td>
+                            <td>Una o más repeticiones</td>
+                            <td><code>a+</code> - coincide con "a", "aa", "aaa"</td>
+                        </tr>
+                        <tr>
+                            <td><code>*</code></td>
+                            <td>Cero o más repeticiones</td>
+                            <td><code>ab*</code> - coincide con "a", "ab", "abb"</td>
+                        </tr>
+                        <tr>
+                            <td><code>?</code></td>
+                            <td>Cero o una repetición</td>
+                            <td><code>colou?r</code> - coincide con "color" o "colour"</td>
+                        </tr>
+                        <tr>
+                            <td><code>|</code></td>
+                            <td>Alternancia (OR)</td>
+                            <td><code>(cat|dog)</code> - coincide con "cat" o "dog"</td>
+                        </tr>
+                        <tr>
+                            <td><code>[]</code></td>
+                            <td>Clase de caracteres</td>
+                            <td><code>[aeiou]</code> - coincide con cualquier vocal</td>
+                        </tr>
+                        <tr>
+                            <td><code>\s</code></td>
+                            <td>Espacio en blanco</td>
+                            <td><code>\s+</code> - uno o más espacios</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Ejemplos Prácticos</h3>
+                <div class="regex-example">
+                    <strong>Validación de Email:</strong><br>
+                    <code>/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/</code><br>
+                    <em>Valida direcciones de correo electrónico con formato estándar</em>
+                </div>
+
+                <div class="regex-example">
+                    <strong>Validación de Pronombres Personales:</strong><br>
+                    <code>/^(i|you|he|she|it|we|they)\s+/i</code><br>
+                    <em>Identifica pronombres personales al inicio de una oración (insensible a mayúsculas)</em>
+                </div>
+
+                <h2>2.2 Chatbots</h2>
+                <p>
+                    Un chatbot es un programa de software diseñado para simular conversaciones humanas a través de interfaces de texto o voz. En el contexto educativo, los chatbots representan una herramienta pedagógica innovadora que permite:
+                </p>
+                <ul>
+                    <li><strong>Interacción personalizada:</strong> Adaptación al ritmo y nivel de cada estudiante</li>
+                    <li><strong>Disponibilidad 24/7:</strong> Acceso continuo al apoyo educativo</li>
+                    <li><strong>Retroalimentación inmediata:</strong> Corrección y orientación en tiempo real</li>
+                    <li><strong>Gamificación:</strong> Experiencia de aprendizaje engaging e interactiva</li>
+                </ul>
+
+                <h2>2.3 Gramática del Verbo TO BE</h2>
+                <p>
+                    El verbo TO BE es fundamental en la gramática inglesa, funcionando como verbo copulativo y auxiliar. Su estructura sigue el patrón básico:
+                </p>
+
+                <div class="code-block">
+                    <strong>ESTRUCTURA BÁSICA:</strong>
+                    SUJETO + VERBO TO BE + PREDICADO
+
+                    <strong>Formas del verbo TO BE:</strong>
+                    • Presente: am, is, are
+                    • Pasado: was, were
+                    • Participio: been
+                    • Gerundio: being
+                </div>
+
+                <h3>Estructuras Gramaticales</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Estructura</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Afirmativa</td>
+                            <td>Subject + BE + Complement</td>
+                            <td>She is a teacher</td>
+                        </tr>
+                        <tr>
+                            <td>Negativa</td>
+                            <td>Subject + BE + NOT + Complement</td>
+                            <td>She is not a teacher</td>
+                        </tr>
+                        <tr>
+                            <td>Interrogativa</td>
+                            <td>BE + Subject + Complement + ?</td>
+                            <td>Is she a teacher?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- SUSTENTACIÓN DEL LENGUAJE -->
+            <div class="section">
+                <h1>3. Sustentación del Lenguaje de Programación Seleccionado</h1>
+
+                <p>
+                    La selección de <span class="highlight">TypeScript</span> como lenguaje principal del proyecto se fundamenta en múltiples ventajas técnicas y estratégicas que optimizan el desarrollo de aplicaciones complejas con procesamiento de texto.
+                </p>
+
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h3>TypeScript</h3>
+                        <p>Tipado estático, mejor IDE support, detección temprana de errores</p>
+                    </div>
+                    <div class="tech-item">
+                        <h3>React</h3>
+                        <p>Interfaz de usuario reactiva, componentes reutilizables, ecosistema robusto</p>
+                    </div>
+                    <div class="tech-item">
+                        <h3>Vite</h3>
+                        <p>Build tool rápido, hot reload instantáneo, optimización automática</p>
+                    </div>
+                    <div class="tech-item">
+                        <h3>Tailwind CSS</h3>
+                        <p>Diseño responsive, utility-first, desarrollo ágil de UI</p>
+                    </div>
+                </div>
+
+                <h2>Ventajas de TypeScript</h2>
+                <ul>
+                    <li><strong>Tipado Estático:</strong> Prevención de errores en tiempo de compilación, especialmente crítico en aplicaciones que manejan múltiples patrones de regex complejos</li>
+                    <li><strong>Intellisense Avanzado:</strong> Autocompletado inteligente que acelera el desarrollo y reduce errores de sintaxis</li>
+                    <li><strong>Refactoring Seguro:</strong> Capacidad de modificar código con confianza gracias al sistema de tipos</li>
+                    <li><strong>Compatibilidad con JavaScript:</strong> Migración gradual y aprovechamiento del ecosistema existente</li>
+                    <li><strong>Documentación Autodescriptiva:</strong> Los tipos funcionan como documentación en vivo del código</li>
+                </ul>
+
+                <h2>Beneficios para el Proyecto</h2>
+                <p>
+                    En el contexto específico de Botsito, TypeScript proporciona ventajas fundamentales:
+                </p>
+                <ul>
+                    <li><strong>Validación de Interfaces:</strong> Las interfaces <code>ValidationResult</code> y <code>Message</code> garantizan consistencia en la estructura de datos</li>
+                    <li><strong>Tipado de Expresiones Regulares:</strong> Prevención de errores en patrones complejos mediante verificación estática</li>
+                    <li><strong>Mantenibilidad:</strong> Facilita la adición de nuevas reglas gramaticales sin introducir bugs</li>
+                    <li><strong>Testing:</strong> Mejor cobertura de pruebas gracias a la verificación de tipos</li>
+                </ul>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- IMPLEMENTACIÓN -->
+            <div class="section">
+                <h1>4. Implementación</h1>
+
+                <h2>4.1 Arquitectura del Sistema</h2>
+                <div class="architecture-diagram">
+                    <div class="module-box">Interfaz de Usuario<br>(React + TypeScript)</div>
+                    <div class="arrow">↓</div>
+                    <div class="module-box">Controlador Principal<br>(App.tsx)</div>
+                    <div class="arrow">↓</div>
+                    <div class="module-box">Motor de Validación<br>(validator.ts)</div>
+                    <div class="arrow">↓</div>
+                    <div class="module-box">Expresiones Regulares<br>(PATTERNS)</div>
+                </div>
+
+                <h2>4.2 Expresiones Regulares Utilizadas</h2>
+
+                <h3>Patrones para Sujetos</h3>
+                <div class="code-block">
+// Pronombres personales
+personalPronouns: /^(i|you|he|she|it|we|they)\s+/i
+
+// Nombres propios
+properNouns: /^[A-Z][a-z]+\s+/
+
+// Sustantivos comunes con artículo
+commonNounsWithArticle: /^the\s+[a-z]+\s+/i
+
+// Pronombres demostrativos
+demonstrativePronouns: /^(this|that|these|those)\s+[a-z]+\s+/i
+                </div>
+
+                <h3>Patrones para Oraciones Afirmativas (Presente)</h3>
+                <div class="code-block">
+// Pronombre "I"
+i: /^i\s+am\s+.+/i
+
+// Pronombres plurales y "you"
+youWe: /^(you|we|they)\s+are\s+.+/i
+
+// Tercera persona singular
+heSheIt: /^(he|she|it)\s+is\s+.+/i
+
+// Nombres propios singulares
+properNounSingular: /^[A-Z][a-z]+\s+is\s+.+/
+                </div>
+
+                <h3>Patrones para Oraciones Negativas</h3>
+                <div class="code-block">
+// Negación con "I"
+i: /^i\s+(am\s+not|'m\s+not)\s+.+/i
+
+// Contracciones negativas
+youWe: /^(you|we|they)\s+(are\s+not|aren't)\s+.+/i
+
+// Tercera persona negativa
+heSheIt: /^(he|she|it)\s+(is\s+not|isn't)\s+.+/i
+                </div>
+
+                <h3>Patrones para Preguntas</h3>
+                <div class="code-block">
+// Preguntas en presente
+toBeQuestionPresent: /^(am|are|is)\s+(i|you|he|she|it|we|they|[A-Z][a-z]+)\s+.+\?$/i
+
+// Preguntas en pasado
+toBeQuestionPast: /^(was|were)\s+(i|you|he|she|it|we|they|[A-Z][a-z]+)\s+.+\?$/i
+                </div>
+
+                <h2>4.3 Módulos Principales</h2>
+
+                <h3>Módulo Chatbot (App.tsx)</h3>
+                <p>Componente principal que maneja:</p>
+                <ul>
+                    <li>Estado de la conversación y mensajes</li>
+                    <li>Interacción con el usuario</li>
+                    <li>Integración con el motor de validación</li>
+                    <li>Interfaz de usuario responsiva</li>
+                </ul>
+
+                <div class="code-block">
+interface Message {
+  id: number;
+  text: string;
+  isBot: boolean;
+  timestamp: Date;
+  validationResult?: ValidationResult;
+}
+
+const [messages, setMessages] = useState&lt;Message[]&gt;([]);
+const [isValidationMode, setIsValidationMode] = useState(false);
+                </div>
+
+                <h3>Módulo Validador (validator.ts)</h3>
+                <p>Motor de procesamiento que incluye:</p>
+                <ul>
+                    <li>Función principal <code>validateSentence()</code></li>
+                    <li>Validadores específicos para diferentes tipos de oraciones</li>
+                    <li>Generación automática de correcciones</li>
+                    <li>Detección de tiempo verbal</li>
+                </ul>
+
+                <div class="code-block">
+export function validateSentence(sentence: string): ValidationResult {
+  const trimmedSentence = sentence.trim();
+
+  // Verificar si es una pregunta
+  if (trimmedSentence.endsWith('?')) {
+    return validateQuestion(trimmedSentence);
+  }
+
+  // Verificar frases afirmativas y negativas
+  return validateStatement(trimmedSentence);
+}
+                </div>
+
+                <h3>Módulo de Pruebas (validator.test.ts)</h3>
+                <p>Suite de pruebas unitarias que valida:</p>
+                <ul>
+                    <li>Funcionamiento correcto de cada patrón regex</li>
+                    <li>Casos límite y edge cases</li>
+                    <li>Generación apropiada de mensajes de error</li>
+                    <li>Correcciones automáticas precisas</li>
+                </ul>
+
+                <h2>4.4 Ejemplos de Ejecución</h2>
+
+                <div class="screenshot">
+                    <h3>Conversación Inicial</h3>
+                    <div style="text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <div style="color: #3498db; margin-bottom: 0.5rem;"><strong>🤖 Botsito:</strong> Hello! I'm Botsito, an English Grammar Bot specializing in the verb TO BE. What's your name?</div>
+                        <div style="color: #2c3e50; margin-bottom: 0.5rem;"><strong>👤 Usuario:</strong> María</div>
+                        <div style="color: #3498db; margin-bottom: 0.5rem;"><strong>🤖 Botsito:</strong> Nice to meet you, María! I can help you practice English grammar with the verb TO BE. Type 'validate' to start practicing!</div>
+                    </div>
+                </div>
+
+                <div class="screenshot">
+                    <h3>Validación Exitosa</h3>
+                    <div style="text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <div style="color: #2c3e50; margin-bottom: 0.5rem;"><strong>👤 Usuario:</strong> She is a teacher</div>
+                        <div style="color: #27ae60; margin-bottom: 0.5rem;"><strong>🤖 Botsito:</strong> ✓ Perfect! That's a correct affirmative sentence with TO BE in present tense.</div>
+                    </div>
+                </div>
+
+                <div class="screenshot">
+                    <h3>Corrección de Error</h3>
+                    <div style="text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <div style="color: #2c3e50; margin-bottom: 0.5rem;"><strong>👤 Usuario:</strong> mary is student</div>
+                        <div style="color: #e74c3c; margin-bottom: 0.5rem;"><strong>🤖 Botsito:</strong> ✗ Error: Proper nouns (names) must start with a capital letter.</div>
+                        <div style="color: #f39c12;"><strong>Corrección sugerida:</strong> Mary is a student</div>
+                    </div>
+                </div>
+
+                <div class="screenshot">
+                    <h3>Validación de Preguntas</h3>
+                    <div style="text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <div style="color: #2c3e50; margin-bottom: 0.5rem;"><strong>👤 Usuario:</strong> Are you a robot?</div>
+                        <div style="color: #27ae60; margin-bottom: 0.5rem;"><strong>🤖 Botsito:</strong> ✓ Correct question structure with TO BE in present tense!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- CONCLUSIONES -->
+            <div class="section">
+                <h1>5. Conclusiones</h1>
+
+                <div class="conclusion-box">
+                    <h2>5.1 Aprendizajes sobre Expresiones Regulares</h2>
+                    <p>
+                        El desarrollo de Botsito ha proporcionado una comprensión profunda y práctica de las expresiones regulares como herramienta fundamental en el procesamiento de texto. Los principales aprendizajes incluyen:
+                    </p>
+                </div>
+
+                <ul>
+                    <li><strong>Complejidad Modular:</strong> Las expresiones regulares complejas se construyen mejor mediante la combinación de patrones simples y bien definidos, facilitando el mantenimiento y la depuración.</li>
+
+                    <li><strong>Precisión vs. Flexibilidad:</strong> Encontrar el equilibrio adecuado entre patrones muy restrictivos (que pueden rechazar entradas válidas) y patrones muy permisivos (que pueden aceptar entradas incorrectas) requiere iteración y pruebas exhaustivas.</li>
+
+                    <li><strong>Optimización de Rendimiento:</strong> El orden de evaluación de patrones y la estructura de las expresiones regulares impacta significativamente en el rendimiento, especialmente cuando se procesan múltiples validaciones simultáneamente.</li>
+
+                    <li><strong>Mantenibilidad del Código:</strong> La documentación exhaustiva de cada patrón regex y la organización en estructuras de datos claras es crucial para la sostenibilidad del proyecto a largo plazo.</li>
+
+                    <li><strong>Testing Integral:</strong> Las expresiones regulares requieren baterías de pruebas exhaustivas que cubran casos normales, casos límite y casos de error para garantizar comportamiento predecible.</li>
+                </ul>
+
+                <h2>5.2 Enriquecimiento Personal, Laboral y Académico</h2>
+
+                <h3>Desarrollo Personal</h3>
+                <ul>
+                    <li><strong>Pensamiento Lógico:</strong> El diseño de patrones regex ha fortalecido significativamente las habilidades de pensamiento analítico y resolución de problemas complejos.</li>
+
+                    <li><strong>Atención al Detalle:</strong> El trabajo con expresiones regulares requiere precisión extrema, desarrollando habilidades de atención al detalle transferibles a otros ámbitos.</li>
+
+                    <li><strong>Perseverancia:</strong> La depuración de patrones complejos ha desarrollado resistencia y metodología sistemática para abordar problemas técnicos desafiantes.</li>
+                </ul>
+
+                <h3>Proyección Laboral</h3>
+                <ul>
+                    <li><strong>Competencias Técnicas Valoradas:</strong> El dominio de expresiones regulares es una habilidad altamente demandada en roles de desarrollo de software, análisis de datos y ciberseguridad.</li>
+
+                    <li><strong>Procesamiento de Datos:</strong> Las habilidades adquiridas son directamente aplicables en proyectos de big data, ETL, y análisis de logs en entornos empresariales.</li>
+
+                    <li><strong>Desarrollo Full-Stack:</strong> La experiencia con TypeScript, React y arquitecturas modernas de frontend posiciona favorablemente para roles de desarrollo web contemporáneo.</li>
+
+                    <li><strong>Calidad de Software:</strong> La experiencia en testing y validación robusta es fundamental para roles de QA y desarrollo de software crítico.</li>
+                </ul>
+
+                <h3>Contribución Académica</h3>
+                <ul>
+                    <li><strong>Aplicación Práctica de Teoría:</strong> El proyecto demuestra la aplicación exitosa de conceptos teóricos de ciencias de la computación en un contexto real y útil.</li>
+
+                    <li><strong>Interdisciplinariedad:</strong> La intersección entre programación, lingüística y pedagogía abre oportunidades para investigación en tecnología educativa.</li>
+
+                    <li><strong>Metodología de Desarrollo:</strong> La experiencia con metodologías modernas de desarrollo (testing, versionado, documentación) proporciona base sólida para proyectos académicos futuros.</li>
+
+                    <li><strong>Comprensión de Lenguajes Formales:</strong> El trabajo con expresiones regulares profundiza la comprensión de teoría de autómatas y lenguajes formales, fundamentales en ciencias de la computación.</li>
+                </ul>
+
+                <h2>5.3 Reflexiones Finales</h2>
+                <p>
+                    El desarrollo de Botsito ha demostrado que las expresiones regulares, más allá de ser una herramienta técnica, representan un puente entre la lógica computacional y la comunicación humana. La capacidad de traducir reglas gramaticales complejas en patrones algorítmicos precisos ilustra la elegancia y poder de la programación como disciplina.
+                </p>
+
+                <p>
+                    Este proyecto ha validado la importancia de combinar rigor técnico con propósito educativo, resultando en una aplicación que no solo funciona correctamente desde el punto de vista técnico, sino que también proporciona valor real a usuarios finales en su proceso de aprendizaje.
+                </p>
+
+                <div class="conclusion-box">
+                    <h3>Impacto y Proyección Futura</h3>
+                    <p>
+                        Botsito establece una base sólida para el desarrollo de herramientas educativas más sofisticadas, potencialmente expandibles a otros aspectos gramaticales, idiomas adicionales, o integración con sistemas de gestión de aprendizaje. La arquitectura modular y el código bien documentado facilitan futuras extensiones y mejoras.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad adicional para mejorar la experiencia
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar comportamiento suave al botón de imprimir
+            const btnDownload = document.querySelector('.btn-download');
+            if (btnDownload) {
+                btnDownload.addEventListener('click', function() {
+                    // Pequeña animación antes de imprimir
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

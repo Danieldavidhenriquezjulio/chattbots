@@ -107,7 +107,10 @@ export function validateSentence(sentence: string): ValidationResult {
 }
 
 function validateQuestion(sentence: string): ValidationResult {
-  // Validar preguntas en presente
+  const words = sentence.toLowerCase().replace('?', '').trim().split(/\s+/);
+  const verb = words[0];
+
+  // Validar preguntas en presente con estructura completa
   if (PATTERNS.toBeQuestionPresent.general.test(sentence)) {
     if (isCorrectQuestionStructure(sentence, 'present')) {
       return {
@@ -119,7 +122,7 @@ function validateQuestion(sentence: string): ValidationResult {
     }
   }
 
-  // Validar preguntas en pasado
+  // Validar preguntas en pasado con estructura completa
   if (PATTERNS.toBeQuestionPast.general.test(sentence)) {
     if (isCorrectQuestionStructure(sentence, 'past')) {
       return {
@@ -129,6 +132,68 @@ function validateQuestion(sentence: string): ValidationResult {
         tense: "past"
       };
     }
+  }
+
+  // Caso especial: pregunta incompleta que comienza con verbo TO BE
+  if (/^(am|are|is|was|were)\s+/i.test(sentence) && words.length >= 2) {
+    const complement = words.slice(1).join(' ');
+    let suggestions = [];
+
+    if (verb === 'are') {
+      suggestions = [
+        `They are ${complement}.`,
+        `We are ${complement}.`,
+        `You are ${complement}.`,
+        `Are they ${complement}?`,
+        `Are we ${complement}?`,
+        `Are you ${complement}?`
+      ];
+    } else if (verb === 'is') {
+      suggestions = [
+        `He is ${complement}.`,
+        `She is ${complement}.`,
+        `It is ${complement}.`,
+        `Is he ${complement}?`,
+        `Is she ${complement}?`,
+        `Is it ${complement}?`
+      ];
+    } else if (verb === 'am') {
+      suggestions = [
+        `I am ${complement}.`,
+        `Am I ${complement}?`
+      ];
+    } else if (verb === 'was') {
+      suggestions = [
+        `He was ${complement}.`,
+        `She was ${complement}.`,
+        `It was ${complement}.`,
+        `I was ${complement}.`,
+        `Was he ${complement}?`,
+        `Was she ${complement}?`,
+        `Was it ${complement}?`,
+        `Was I ${complement}?`
+      ];
+    } else if (verb === 'were') {
+      suggestions = [
+        `They were ${complement}.`,
+        `We were ${complement}.`,
+        `You were ${complement}.`,
+        `Were they ${complement}?`,
+        `Were we ${complement}?`,
+        `Were you ${complement}?`
+      ];
+    }
+
+    const tense = ['am', 'are', 'is'].includes(verb) ? 'present' : 'past';
+    const correction = suggestions.length > 0 ? suggestions[0] : generateCorrection(sentence);
+
+    return {
+      isValid: false,
+      message: `✗ Incomplete sentence. Missing subject. Try: ${suggestions.slice(0, 3).join(', ')}.`,
+      type: "question",
+      tense: tense,
+      correction: correction
+    };
   }
 
   // Si no es válida, generar corrección
@@ -144,6 +209,11 @@ function validateQuestion(sentence: string): ValidationResult {
 }
 
 function validateStatement(sentence: string): ValidationResult {
+  // Verificar si comienza con un verbo TO BE (caso especial: pregunta sin signo de interrogación)
+  if (/^(am|are|is|was|were)\s+/i.test(sentence)) {
+    return validateQuestion(sentence);
+  }
+
   // Verificar si contiene negación - mejorar detección de contracciones
   const isNegative = /\s+(not|n't)(\s+|$)/.test(sentence) || /\w+'t\s+/.test(sentence);
 
@@ -438,6 +508,7 @@ function generateCorrection(sentence: string): string {
   // Detectar y corregir múltiples nombres propios con "and"
   if (sentence.toLowerCase().includes(' and ')) {
     // Corregir capitalización en sujetos compuestos - AMBOS nombres
+      // @ts-ignore
     correctedSentence = correctedSentence.replace(/\b([a-z][a-z]*)\s+and\s+([a-z][a-z]*)\b/gi, (match, name1, name2) => {
       return name1.charAt(0).toUpperCase() + name1.slice(1) + ' and ' + name2.charAt(0).toUpperCase() + name2.slice(1);
     });
@@ -446,12 +517,13 @@ function generateCorrection(sentence: string): string {
     correctedSentence = correctedSentence.replace(/\b([A-Z][a-z]+\s+and\s+[A-Z][a-z]+)\s+is\b/gi, '$1 are');
 
     // Corregir capitalización de pronombres en sujetos compuestos - mantener minúsculas excepto "I"
+      // @ts-ignore
     correctedSentence = correctedSentence.replace(/\b(He|She|It|You|We|They)\s+and\s+(he|she|it|you|we|they|i)\b/gi, (match, first, second) => {
       const firstLower = first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
       const secondCorrect = second.toLowerCase() === 'i' ? 'I' : second.toLowerCase();
       return `${firstLower} and ${secondCorrect}`;
     });
-
+// @ts-ignore
     correctedSentence = correctedSentence.replace(/\b([A-Z][a-z]+)\s+and\s+(He|She|It|You|We|They)\b/gi, (match, name, pronoun) => {
       return `${name} and ${pronoun.toLowerCase()}`;
     });
